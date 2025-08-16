@@ -30,39 +30,52 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/monthly">Monthly Expense</a></li>
                             <li><a class="dropdown-item" href="/yearly">Yearly Expense</a></li>               
-                            <li><a class="dropdown-item" href="#"></a></li>
                         </ul>
                     </li>
-                    
+                </ul>
             </div>
         </div>
     </nav>
-    <form action="/add" method="POST" class="p-3">
-    <div class="mb-2">
-        <label>Date</label>
-        <input type="date" name="date" class="form-control" required>
-    </div>
-    <div class="mb-2">
-        <label>Category</label>
-        <select name="category" class="form-control" required>
-            <option>Food</option>
-            <option>Transport</option>
-            <option>Shopping</option>
-            <option>Bills</option>
-            <option>Other</option>
-        </select>
-    </div>
-    <div class="mb-2">
-        <label>Amount</label>
-        <input type="number" name="amount" class="form-control" required>
-    </div>
-    <div class="mb-2">
-        <label>Note</label>
-        <input type="text" name="note" class="form-control">
-    </div>
-    <button type="submit" class="btn btn-primary">Add Expense</button>
-</form>
 
+    <form action="/add" method="POST" class="p-3">
+        <div class="mb-2">
+            <label>Date</label>
+            <input type="date" name="date" class="form-control" required>
+        </div>
+        <div class="mb-2">
+            <label>Category</label>
+            <select name="category" class="form-control" required>
+                <option>Food</option>
+                <option>Transport</option>
+                <option>Shopping</option>
+                <option>Bills</option>
+                <option>Other</option>
+            </select>
+        </div>
+        <div class="mb-2">
+            <label>Amount</label>
+            <input type="number" name="amount" class="form-control" required>
+        </div>
+        <div class="mb-2">
+            <label>Note</label>
+            <input type="text" name="note" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Expense</button>
+    </form>
+
+    <!-- Responsive Chart Section -->
+    <div class="container my-4">
+        {% if chart_url %}
+        <div class="chart-container text-center">
+            <img src="data:image/png;base64,{{ chart_url }}" 
+                 alt="Daily Expenses Chart" 
+                 class="img-fluid" 
+                 style="max-width: 100%; height: auto;">
+        </div>
+        {% else %}
+        <p class="text-center">No expenses recorded yet.</p>
+        {% endif %}
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
