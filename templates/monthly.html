@@ -9,16 +9,14 @@
   <style>
     /* Make chart responsive */
     .chart-container {
-      width: 100%;
-      max-width: 700px; /* Optional: keeps chart from stretching too much on large screens */
-    }
+  max-width: 700px;   /* prevents it from being too large */
+  width: 100%;        /* makes it responsive */
+}
+img.chart-img {
+  display: block;
+  margin: 0 auto;     /* center fallback */
+}
 
-    img.chart-img {
-      width: 100%;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-    }
   </style>
 </head>
 
@@ -73,9 +71,13 @@
     </form>
 
     <!-- Chart -->
-    <div class="chart-container mb-4">
-      <img src="data:image/png;base64,{{ chart }}" alt="Monthly Expense Pie Chart" class="chart-img" />
-    </div>
+<div class="d-flex justify-content-center mb-4">
+  <div class="chart-container">
+    <img src="data:image/png;base64,{{ chart }}" 
+         alt="Monthly Expense Pie Chart" 
+         class="chart-img img-fluid" />
+  </div>
+</div>
 
     <!-- Table -->
     <h3 class="mb-3">Detailed Expenses</h3>
@@ -108,3 +110,4 @@
 </body>
 
 </html>
+
