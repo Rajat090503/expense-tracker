@@ -2,45 +2,60 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+  <style>
+    /* Make chart responsive */
+    .chart-container {
+      width: 100%;
+      max-width: 700px; /* Optional: keeps chart from stretching too much on large screens */
+    }
+
+    img.chart-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Expense Tracker</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link " aria-current="page" href="/">Daily Expense</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Expense Details
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/monthly">Monthly Expense</a></li>
-                            <li><a class="dropdown-item" href="/yearly">Yearly Expense</a></li>
-                            <li><a class="dropdown-item" href="#"></a></li>
-                        </ul>
-                    </li>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Expense Tracker</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/">Daily Expense</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Expense Details
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/monthly">Monthly Expense</a></li>
+              <li><a class="dropdown-item" href="/yearly">Yearly Expense</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-            </div>
-        </div>
-    </nav>
+  <div class="container my-4">
 
-    <div class="d-flex justify-content-center mb-4">
-    <form method="POST" class="row g-3 mb-4">
-      <div class="col-auto">
+    <!-- Month/Year Form -->
+    <form method="POST" class="row g-3 justify-content-center mb-4">
+      <div class="col-12 col-md-auto">
         <label for="month" class="form-label">Select Month</label>
         <select id="month" name="month" class="form-select">
           {% for i in range(1,13) %}
@@ -48,21 +63,21 @@
           {% endfor %}
         </select>
       </div>
-      <div class="col-auto">
+      <div class="col-12 col-md-auto">
         <label for="year" class="form-label">Select Year</label>
         <input type="number" id="year" name="year" value="{{ year }}" class="form-control" min="2000" max="2100" />
       </div>
-      <div class="col-auto align-self-end">
+      <div class="col-12 col-md-auto align-self-end">
         <button type="submit" class="btn btn-primary mb-3">Show</button>
       </div>
     </form>
+
+    <!-- Chart -->
+    <div class="chart-container mb-4">
+      <img src="data:image/png;base64,{{ chart }}" alt="Monthly Expense Pie Chart" class="chart-img" />
     </div>
 
-      <div class="d-flex justify-content-center mb-4">
-      <img src="data:image/png;base64,{{ chart }}" alt="Monthly Expense Pie Chart" class="img-fluid" style="max-width: 500px;" />
-    </div>
-
-    
+    <!-- Table -->
     <h3 class="mb-3">Detailed Expenses</h3>
     <div class="table-responsive">
       <table class="table table-striped table-bordered">
@@ -89,9 +104,7 @@
 
   </div>
 
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
