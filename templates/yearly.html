@@ -2,83 +2,107 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+  <style>
+    /* Chart container for responsiveness */
+    .chart-container {
+      max-width: 100%;
+      overflow-x: auto;
+      text-align: center;
+    }
+    .chart-container img {
+      width: 100%;
+      height: auto;
+      max-width: 800px;
+    }
+
+    /* Center the detailed table */
+    .table-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .table-container .table-responsive {
+      max-width: 95%;
+    }
+  </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Expense Tracker</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Daily Expense</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                             Expense Details
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/monthly">Monthly Expense</a></li>
-                            <li><a class="dropdown-item" href="#">Yearly Expense</a></li>               
-                            <li><a class="dropdown-item" href="#"></a></li>
-                        </ul>
-                    </li>
-                    
-            </div>
-        </div>
-    </nav>
-    <form method="POST" class="d-flex justify-content-center mb-4">
-      <div class="col-auto">
-        <label for="year" class="form-label">Select Year</label>
-        <select id="year" name="year" class="form-select">
-          {% for y in years %}
-          <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
-          {% endfor %}
-        </select>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Expense Tracker</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Daily Expense</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Expense Details
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/monthly">Monthly Expense</a></li>
+              <li><a class="dropdown-item" href="#">Yearly Expense</a></li>
+            </ul>
+          </li>
+        </ul>
       </div>
-      <div class="col-auto align-self-end ms-2">
-        <button type="submit" class="btn btn-primary">Show</button>
-      </div>
-    </form>
-
-    <!-- Bar chart -->
-    <div class="d-flex justify-content-center mb-4">
-      <img src="data:image/png;base64,{{ chart }}" alt="Yearly Expense Bar Chart" class="img-fluid" style="max-width: 800px;" />
     </div>
+  </nav>
 
-    <!-- Insights -->
-    <div class="mb-4">
-      <h4>Insights</h4>
-      <p><strong>Highest Expense Month:</strong> {{ max_month }} (₹{{ "%.2f"|format(max_expense) }})</p>
-      <p>Top categories contributing:</p>
-      <ul>
-        {% for cat, amt in max_reasons.items() %}
-          <li>{{ cat }}: ₹{{ "%.2f"|format(amt) }}</li>
+  <form method="POST" class="d-flex justify-content-center mb-4 flex-wrap">
+    <div class="col-auto">
+      <label for="year" class="form-label">Select Year</label>
+      <select id="year" name="year" class="form-select">
+        {% for y in years %}
+        <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
         {% endfor %}
-      </ul>
-      <p><strong>Lowest Expense Month:</strong> {{ min_month }} (₹{{ "%.2f"|format(min_expense) }})</p>
-      <p>Main spending categories:</p>
-      <ul>
-        {% for cat, amt in min_reasons.items() %}
-          <li>{{ cat }}: ₹{{ "%.2f"|format(amt) }}</li>
-        {% endfor %}
-      </ul>
+      </select>
     </div>
+    <div class="col-auto align-self-end ms-2">
+      <button type="submit" class="btn btn-primary">Show</button>
+    </div>
+  </form>
 
-    <!-- Detailed expense table -->
-    <h3 class="mb-3">Detailed Expenses</h3>
+  <!-- Responsive Chart -->
+  <div class="chart-container mb-4">
+    <img src="data:image/png;base64,{{ chart }}" alt="Yearly Expense Bar Chart" />
+  </div>
+
+  <!-- Insights -->
+  <div class="mb-4 px-3">
+    <h4>Insights</h4>
+    <p><strong>Highest Expense Month:</strong> {{ max_month }} (₹{{ "%.2f"|format(max_expense) }})</p>
+    <p>Top categories contributing:</p>
+    <ul>
+      {% for cat, amt in max_reasons.items() %}
+      <li>{{ cat }}: ₹{{ "%.2f"|format(amt) }}</li>
+      {% endfor %}
+    </ul>
+    <p><strong>Lowest Expense Month:</strong> {{ min_month }} (₹{{ "%.2f"|format(min_expense) }})</p>
+    <p>Main spending categories:</p>
+    <ul>
+      {% for cat, amt in min_reasons.items() %}
+      <li>{{ cat }}: ₹{{ "%.2f"|format(amt) }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- Centered Detailed Expense Table -->
+  <h3 class="mb-3 text-center">Detailed Expenses</h3>
+  <div class="table-container">
     <div class="table-responsive">
-      <table class="table table-striped table-bordered">
+      <table class="table table-striped table-bordered text-center">
         <thead class="table-dark">
           <tr>
             <th>Date</th>
@@ -99,13 +123,9 @@
         </tbody>
       </table>
     </div>
-
   </div>
 
-    
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
