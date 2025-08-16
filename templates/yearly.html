@@ -79,9 +79,10 @@
     <img src="data:image/png;base64,{{ chart }}" alt="Yearly Expense Bar Chart" />
   </div>
 
-  <!-- Insights -->
-  <div class="mb-4 px-3">
-    <h4>Insights</h4>
+  
+<div class="container my-4 d-flex justify-content-center">
+  <div style="max-width: 700px; width: 100%;">
+    <h4 class="text-center mb-3">Insights</h4>
     <p><strong>Highest Expense Month:</strong> {{ max_month }} (₹{{ "%.2f"|format(max_expense) }})</p>
     <p>Top categories contributing:</p>
     <ul>
@@ -97,6 +98,8 @@
       {% endfor %}
     </ul>
   </div>
+</div>
+
 
  <h3 class="mb-3">Detailed Expenses</h3>
 <div class="table-responsive">
@@ -126,5 +129,6 @@
 </body>
 
 </html>
+
 
 
